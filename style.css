@@ -1,0 +1,87 @@
+/*TODO: make positioining relative */
+@keyframes colorChange {
+    0% {
+        color: #fff;
+    }
+
+    100% {
+        color: #b70000;
+    }
+}
+
+body {
+    padding: 12%;
+    background: black;
+    color: white;
+    text-align: center;
+    font-family: Cutive Mono;
+}
+
+h1 {
+    animation: 15s ease 0s 1 colorChange;
+    animation-fill-mode: forwards;
+}
+
+input[type=text], input[type=password] {
+    padding: 8px;
+    background: #fff;
+}
+
+button {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    padding: 15px 40px;
+    border-width: 0px;
+    background: #fff;
+    font-family: Cutive Mono;
+    font-weight: bold;
+    font-size: 16px;
+    transition: color 0.25s cubic-bezier(1, 0.25, 0, 0.75);
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #b70000;
+    color: #fff;
+}
+
+.left-align-div {
+    text-align: left;
+	padding-left: 40%;
+}
+
+#target-name {
+    color: #b70000;
+    text-decoration: underline;
+}
+
+/*MODAL SHIT*/
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.modal-content {
+    background-color: #b70000;
+    margin: 20% auto;
+    padding: 20px;
+    width: 25%;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 40px;
+    font-weight: bold;
+}
+
+.close:hover, .close:focus {
+    text-decoration: none;
+    cursor: pointer;
+}
