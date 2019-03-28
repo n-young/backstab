@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>spy portal</title>
+	<link rel="shortcut icon" href="logoBW-circle.png">
+	<link href="https://fonts.googleapis.com/css?family=Cutive+Mono" rel="stylesheet">
+	<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+
+<body>
+	<h1>spy portal</h1>
+	<p>
+		Please fill out your personal information  before the game starts on May 1st
+	</p>
+	</div>
+
+	<script>
+		var elimModal = document.getElementById('elimModal');
+		var elimBtn = document.getElementById("elimBtn");
+		var elimSpan = document.getElementById("elimSpan");
+		elimBtn.onclick = function() {
+			elimModal.style.display = "block";
+		}
+		elimSpan.onclick = function() {
+			elimModal.style.display = "none";
+			console.log('ye')
+		}
+		window.onclick = function(event) {
+			if (event.target == elimModal) {
+				elimModal.style.display = "none";
+			}
+		}
+	</script>
+
+	<script src="script.js" type="text/javascript"></script>
+	<!-- JQuery, JS, Angular
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/jquery-ui.min.js" type="text/javascript"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js" type="text/javascript"></script> -->
+</body>
+
+</html>
