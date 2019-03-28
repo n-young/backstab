@@ -1,65 +1,46 @@
-<!DOCTYPE html>
-<html>
+<% include partials/header %>
+<title>spy vs spy</title>
+<img src="logoBW.png" width="200px" />
+<h1>spy vs spy</h1>
+<form id="login">
+	<label for="username">user: </label><input type="text" name="username" required /><br /><br />
+	<label for="password">pass: </label><input type="password" name="password" required /><br />
+	<button href="user.html" type="submit">enter</button>
+</form>
 
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>spy vs spy</title>
-	<link rel="shortcut icon" href="logoBW-circle.png">
-	<link href="https://fonts.googleapis.com/css?family=Cutive+Mono" rel="stylesheet">
-	<link rel="stylesheet" href="style.css" type="text/css">
-</head>
+<button id="regBtn">register</button>
 
-<body>
-	<img src="logoBW.png" width="200px" />
-	<h1>spy vs spy</h1>
-	<form id="login">
-		<label for="username">user: </label><input type="text" name="username" required /><br /><br />
-		<label for="password">pass: </label><input type="password" name="password" required /><br />
-		<button href="user.html" type="submit">enter</button>
-	</form>
-
-	<button id="regBtn">register</button>
-
-	<div id="regModal" class="modal">
-		<div class="modal-content">
-			<span id="regSpan" class="close">&times;</span>
-			<h2>
-				please enter your details
-			</h2>
-			<form id="reg">
-				<label for="username">user: </label>
-				<input type="text" name="username" required /> <br /><br />
-				<label for="password">pass: </label>
-				<input type="password" name="password" required /><br />
-				<button href="user.html" type="submit">enter</button>
-			</form>
-		</div>
+<div id="regModal" class="modal">
+	<div class="modal-content">
+		<span id="regSpan" class="close">&times;</span>
+		<h2>
+			please enter your details
+		</h2>
+		<form id="reg">
+			<label for="username">user: </label>
+			<input type="text" name="username" required /> <br /><br />
+			<label for="password">pass: </label>
+			<input type="password" name="password" required /><br />
+			<button href="user.html" type="submit">enter</button>
+		</form>
 	</div>
+</div>
 
-	<script>
-		var regModal = document.getElementById('regModal');
-		var regBtn = document.getElementById("regBtn");
-		var regSpan = document.getElementById("regSpan");
-		regBtn.onclick = function() {
-			regModal.style.display = "block";
-		}
-		regSpan.onclick = function() {
+<script>
+	var regModal = document.getElementById('regModal');
+	var regBtn = document.getElementById("regBtn");
+	var regSpan = document.getElementById("regSpan");
+	regBtn.onclick = function() {
+		regModal.style.display = "block";
+	}
+	regSpan.onclick = function() {
+		regModal.style.display = "none";
+		console.log('ye')
+	}
+	window.onclick = function(event) {
+		if (event.target == regModal) {
 			regModal.style.display = "none";
-			console.log('ye')
 		}
-		window.onclick = function(event) {
-			if (event.target == regModal) {
-				regModal.style.display = "none";
-			}
-		}
-	</script>
-
-	<script src="script.js" type="text/javascript"></script>
-	<!-- JQuery, JS, Angular
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
-	<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/jquery-ui.min.js" type="text/javascript"></script>
-	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js" type="text/javascript"></script> -->
-</body>
-
-</html>
+	}
+</script>
+<% include partials/footer %>
