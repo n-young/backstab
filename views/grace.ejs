@@ -1,26 +1,16 @@
 <% include partials/header %>
 <title>spy portal</title>
 <h1>spy portal</h1>
-<p>
-	Please fill out your personal information before the game starts on May 1st
-</p>
+<div class="content">
+	<h3>
+		your payment has been received and your personal information has been confirmed.  please join the Spy v Spy Facebook group ASAP for vital announcements. the game will begin on May 6th.
+	</h3>
+	<h3>
+		please read the <i>Spy Act</i> fully before the game begins.
+	</h3>
+	<button>spy act</button> <br />
+	<button>fb group</button> <br />
+	<a href="/logout"><button>logout</button></a>
 </div>
 
-<script>
-	var elimModal = document.getElementById('elimModal');
-	var elimBtn = document.getElementById("elimBtn");
-	var elimSpan = document.getElementById("elimSpan");
-	elimBtn.onclick = function() {
-		elimModal.style.display = "block";
-	}
-	elimSpan.onclick = function() {
-		elimModal.style.display = "none";
-		console.log('ye')
-	}
-	window.onclick = function(event) {
-		if (event.target == elimModal) {
-			elimModal.style.display = "none";
-		}
-	}
-</script>
 <% include partials/footer %>

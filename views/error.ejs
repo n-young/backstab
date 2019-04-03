@@ -1,0 +1,29 @@
+<% include partials/header %>
+<title>spy portal</title>
+<h1>error</h1>
+<div class="content">
+	<h3>
+		an error has occurred with your registration. please try again.
+	</h3>
+</div>
+
+
+
+<script>
+	var elimModal = document.getElementById('elimModal');
+	var elimBtn = document.getElementById("elimBtn");
+	var elimSpan = document.getElementById("elimSpan");
+	elimBtn.onclick = function() {
+		elimModal.style.display = "block";
+	}
+	elimSpan.onclick = function() {
+		elimModal.style.display = "none";
+		console.log('ye')
+	}
+	window.onclick = function(event) {
+		if (event.target == elimModal) {
+			elimModal.style.display = "none";
+		}
+	}
+</script>
+<% include partials/footer %>

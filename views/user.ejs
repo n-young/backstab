@@ -3,28 +3,36 @@
 <h1>spy portal</h1>
 <h2>target: <span id="target-name">test name</span></h2>
 <h2>image: </h2>
-<img src="" id="target-image" height=150px />
-<h2>details: </h2>
-<p>
-	test details
-</p>
+<img id="target-image" height=150px />
 <button id="elimBtn">eliminated</button>
+
+<div>
+	<button href="/">spy act</button>
+	<button id="safetyBtn" href="/">safety</button>
+	<br />
+	<a href="/logout"><button>logout</button></a>
+</div>
 
 <div id="elimModal" class="modal">
 	<div class="modal-content">
 		<span id="elimSpan" class="close">&times;</span>
 		<h2>please upload a video of your elimination, if available, and confirm your elimination.</h2>
-		<input type="TODO: FILE UPLOAD" />
-		<button id="eliminated-confirm">confirm</button>
+		<form id="elimForm">
+			<br /><input type="file" name="video"/> <br />
+			<button type="submit" id="eliminated-confirm">confirm</button>
+		</form>
 	</div>
 </div>
 
-<div class="bottom">
-	<button href="/">rules</button>
-	<button href="/">safety</button>
-	<button href="/">log out</button>
-</div>
-
+<div id="safetyModal" class="modal">
+	<div class="modal-content">
+		<span id="safetySpan" class="close">&times;</span>
+		<h2>safety</h2>
+		<h3>
+			this week's safety is
+		</h3>
+		<img src="" />
+	</div>
 </div>
 
 <script>
@@ -41,6 +49,21 @@
 	window.onclick = function(event) {
 		if (event.target == elimModal) {
 			elimModal.style.display = "none";
+		}
+	}
+
+	var safetyModal = document.getElementById('safetyModal');
+	var safetyBtn = document.getElementById("safetyBtn");
+	var safetySpan = document.getElementById("safetySpan");
+	safetyBtn.onclick = function() {
+		safetyModal.style.display = "block";
+	}
+	safetySpan.onclick = function() {
+		safetyModal.style.display = "none";
+	}
+	window.onclick = function(event) {
+		if (event.target == safetyModal) {
+			safetyModal.style.display = "none";
 		}
 	}
 </script>

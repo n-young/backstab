@@ -17,21 +17,36 @@ body {
     font-family: Cutive Mono;
 }
 
+.content {
+	max-width: 30vw;
+	margin:auto;
+}
+
 h1 {
     animation: 15s ease 0s 1 colorChange;
     animation-fill-mode: forwards;
 }
 
-input[type=text], input[type=password] {
+h3 {
+	font-size: 20px;
+}
+
+input[type=text], input[type=password], input[type=email] {
     padding: 8px;
 	width: 50vw;
 	max-width: 150px;
     background: #fff;
 }
 
+input[type=file] {
+	background: #fff;
+	color: black;
+}
+
 button {
     margin-top: 30px;
     padding: 15px 40px;
+	width: 150px;
     border-width: 0px;
     background: #fff;
     font-family: Cutive Mono;

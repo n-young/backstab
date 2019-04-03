@@ -2,9 +2,12 @@
 <title>spy vs spy</title>
 <img src="logoBW.png" width="200px" />
 <h1>spy vs spy</h1>
-<form id="login">
-	<label for="username">user: </label><input type="text" name="username" required /><br /><br />
-	<label for="password">pass: </label><input type="password" name="password" required /><br />
+<form action="/login", method="POST">
+	<label for="username">user: </label>
+	<input type="text" name="username" required /><br /><br />
+
+	<label for="password">pass: </label>
+	<input type="password" name="password" required /><br />
 	<button href="user.html" type="submit">enter</button>
 </form>
 
@@ -16,15 +19,23 @@
 		<h2>
 			please enter your details
 		</h2>
-		<form id="reg">
-			<label for="username">user: </label>
-			<input type="text" name="username" required /> <br /><br />
-			<label for="password">pass: </label>
-			<input type="password" name="password" required /><br />
-			<button href="user.html" type="submit">enter</button>
+		<form action="/register", method="POST">
+			<label for="username">sgs email: </label>
+			<input type="email" name="username"  required/> <br/><br/>
+
+			<label for="name">full name: </label>
+			<input type="text" name="name"  required/> <br/><br/>
+
+			<label for="password">password: </label>
+			<input type="password" name="password" required/> <br/><br/>
+
+			<label for="userPicture">photo: </label>
+			<input type="file" name="userPicture"/> <br/><br/>
+			<button>enter</button>
 		</form>
 	</div>
 </div>
+
 
 <script>
 	var regModal = document.getElementById('regModal');
