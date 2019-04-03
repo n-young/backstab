@@ -9,7 +9,7 @@ const LocalStrategy = require('passport-local');
 const passportLocalMongoose = require('passport-local-mongoose');
 const port = 3000;
 
-mongoose.connect("mongodb://localhost/test");
+mongoose.connect("mongodb://localhost/spyvspy");
 app.use(express.static("public"));
 app.use(require("express-session")({
 	secret:"my goodness this code is very janky",
@@ -33,21 +33,21 @@ app.get('/', function(req, res) {
 	res.render("index.ejs");
 })
 
-app.get('/payment', function(req, res) {
-	res.render("payment.ejs");
+app.get('/payment', isLoggedIn, function(req, res) {
+	res.render("payment.ejs", {currentUser: req.user});
 })
 
-app.get('/grace', isLoggedIn, function(req, res) {
-	res.render('grace.ejs');
+app.get('/grace', isLoggedIn, isPaid, function(req, res) {
+	res.render('grace.ejs', {currentUser: req.user});
 })
 
-app.get('/user', function(req, res) {
-	res.render("user.ejs");
+app.get('/user', isLoggedIn, isPaid, function(req, res) {
+	res.render("user.ejs", {currentUser: req.user});
 })
 
 //REG
 app.post('/register', function(req, res) {
-	User.register(new User({username: req.body.username, name: req.body.name}), req.body.password, function(err, user){
+	User.register(new User({username: req.body.username, name: req.body.name, number: req.body.number, paid: false, target: "none"}), req.body.password, function(err, user){
 		if(err) {
 			console.log(err);
 			return res.render('error.ejs');
@@ -75,6 +75,13 @@ function isLoggedIn(req, res, next) {
 		return next();
 	}
 	res.redirect("/");
+}
+
+function isPaid(req, res, next) {
+	if(req.user.paid === true) {
+		return next();
+	}
+	res.redirect("/payment");
 }
 
 //ALL CATCH

@@ -62,6 +62,10 @@ button:hover {
     color: #fff;
 }
 
+#elimBtn {
+	width: 200px;
+}
+
 #target-name {
     color: #b70000;
     text-decoration: underline;

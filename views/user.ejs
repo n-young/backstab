@@ -1,7 +1,8 @@
 <% include partials/header %>
 <title>spy portal</title>
 <h1>spy portal</h1>
-<h2>target: <span id="target-name">test name</span></h2>
+<h2>spy: <span id="spy-name"> <%= currentUser.name %> </span></h2>
+<h2>target: <span id="target-name"> <%= currentUser.target %> </span></h2>
 <h2>image: </h2>
 <img id="target-image" height=150px />
 <button id="elimBtn">eliminated</button>
