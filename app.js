@@ -7,7 +7,8 @@ const bodyParser = require('body-parser');
 const User = require('./models/user.js')
 const LocalStrategy = require('passport-local');
 const passportLocalMongoose = require('passport-local-mongoose');
-const port = process.env.PORT;
+//const port = process.env.PORT;
+const port = 3000;
 
 mongoose.connect("mongodb://localhost/spyvspy");
 app.use(express.static("public"));
@@ -30,6 +31,9 @@ passport.deserializeUser(User.deserializeUser());
 //=========================================
 
 app.get('/', function(req, res) {
+	if(req.isAuthenticated()){
+		return res.redirect("/user");
+	}
 	res.render("index.ejs");
 })
 
@@ -54,7 +58,6 @@ app.post('/register', function(req, res) {
 		}
 		passport.authenticate("local")(req, res, function() {
 			res.redirect("/grace");
-			console.log("2");
 		})
 	});
 });
