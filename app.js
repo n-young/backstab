@@ -7,8 +7,8 @@ const bodyParser = require('body-parser');
 const User = require('./models/user.js')
 const LocalStrategy = require('passport-local');
 const passportLocalMongoose = require('passport-local-mongoose');
-//const port = process.env.PORT;
-const port = 3000;
+const port = process.env.PORT;
+//const port = 3000;
 
 mongoose.connect("mongodb://localhost/spyvspy");
 app.use(express.static("public"));
