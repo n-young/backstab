@@ -7,16 +7,13 @@ const bodyParser = require('body-parser');
 const User = require('./models/user.js')
 const LocalStrategy = require('passport-local');
 const passportLocalMongoose = require('passport-local-mongoose');
-//const nodemailer = require('nodemailer');
 const port = process.env.PORT;
-//const port = 3000;
 
 const MongoClient = require('mongodb').MongoClient;
 const uri = "mongodb+srv://n-young:tetris101@spyvspy-ogfdo.mongodb.net/test?retryWrites=true";
 const client = new MongoClient(uri, { useNewUrlParser: true });
 client.connect(err => {
-  const collection = client.db("test").collection("devices");
-  // perform actions on the collection object
+  const collection = client.db("spyvspy").collection("devices");
   client.close();
 });
 mongoose.connect(uri);
@@ -59,7 +56,8 @@ app.get('/user', isLoggedIn, isPaid, function(req, res) {
 	res.render("user.ejs", {currentUser: req.user});
 })
 
-//REG
+//REGISTRATION
+
 app.post('/register', function(req, res) {
 	User.register(new User({username: req.body.username, name: req.body.name, number: req.body.number, paid: false, target: "none"}), req.body.password, function(err, user){
 		if(err) {
@@ -96,8 +94,6 @@ function isPaid(req, res, next) {
 	}
 	res.redirect("/payment");
 }
-
-//ALL CATCH
 
 app.get('*', function(req, res) {
 	res.redirect('/');
