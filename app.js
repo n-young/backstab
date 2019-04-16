@@ -52,7 +52,7 @@ app.get('/grace', isLoggedIn, isPaid, function(req, res) {
 	res.render('grace.ejs', {currentUser: req.user});
 })
 
-app.get('/user', isLoggedIn, isPaid, function(req, res) {
+app.get('/user', isGameBegun, isLoggedIn, isPaid, function(req, res) {
 	res.render("user.ejs", {currentUser: req.user});
 })
 
@@ -80,6 +80,14 @@ app.get("/logout", function(req, res){
 	req.logout();
 	res.redirect("/")
 });
+
+function isGameBegun(req, res, next) {
+	gameBegun = false;
+	if(gameBegun){
+		res.redirect("/user");
+	}
+	res.redirect("/grace");
+}
 
 function isLoggedIn(req, res, next) {
 	if(req.isAuthenticated()){
