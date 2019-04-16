@@ -7,10 +7,20 @@ const bodyParser = require('body-parser');
 const User = require('./models/user.js')
 const LocalStrategy = require('passport-local');
 const passportLocalMongoose = require('passport-local-mongoose');
+//const nodemailer = require('nodemailer');
 const port = process.env.PORT;
 //const port = 3000;
 
-mongoose.connect("mongodb://localhost/spyvspy");
+const MongoClient = require('mongodb').MongoClient;
+const uri = "mongodb+srv://n-young:tetris101@spyvspy-ogfdo.mongodb.net/test?retryWrites=true";
+const client = new MongoClient(uri, { useNewUrlParser: true });
+client.connect(err => {
+  const collection = client.db("test").collection("devices");
+  // perform actions on the collection object
+  client.close();
+});
+mongoose.connect(uri);
+
 app.use(express.static("public"));
 app.use(require("express-session")({
 	secret:"my goodness this code is very janky",
