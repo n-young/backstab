@@ -8,7 +8,7 @@ var UserSchema = new mongoose.Schema({
 	password: String,
 	paid: Boolean,
 	target: String,
-	target-id: Number,
+	target_id: Number,
 	due: Date,
 	alive: Boolean
 });
