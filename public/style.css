@@ -43,10 +43,10 @@ input[type=file] {
 	color: black;
 }
 
-button {
+a > button, button {
     margin-top: 30px;
     padding: 15px 40px;
-	width: 150px;
+	width: 170px;
     border-width: 0px;
     background: #fff;
     font-family: Cutive Mono;
