@@ -77,9 +77,9 @@ app.get('/nickyoungpage', function(req, res) {
 
 app.post('/register', function(req, res) {
     User.register(new User({
-        email: req.body.username,
+        email: req.body.email,
         name: req.body.name,
-        id: req.body.number,
+        id: req.body.studentId,
         paid: false,
         target: "none",
 		targetId: 0,
