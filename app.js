@@ -82,7 +82,7 @@ app.post('/register', function(req, res) {
         id: req.body.number,
         paid: false,
         target: "none",
-		target_id: 0,
+		targetId: 0,
 		due: new Date(),
 		alive: true
 
