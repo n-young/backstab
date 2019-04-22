@@ -1,26 +1,47 @@
 <% include partials/header %>
 <title>spy portal</title>
-<h1>spy portal</h1>
-<h2>spy: <span id="spy-name"> <%= currentUser.name %> </span></h2>
-<h2>target: <span id="target-name"> <%= currentUser.target %> </span></h2>
-<h2>image: </h2>
-<img id="target-image" height=150px />
-<button id="elimBtn">eliminated</button>
 
-<div>
-	<button href="/">spy act</button>
-	<button id="safetyBtn" href="/">safety</button>
+<% if (currentUser.alert != "") { %>
+
+<div class="alert">
+	<h2><%= currentUser.alert %></h2>
+</div>
+
+<% } currentUser.alert = ""; %>
+
+<h1>spy portal</h1>
+<div class="content">
+	<h2>spy: <%= currentUser.name %></h2>
+	<h2 style="text-decoration: underline">target: <%= currentUser.target.name %></h2>
+	<h2>due: <%= currentUser.due %></h2>
+	<h2>image: </h2>
+	<img style="height:200px" src="<%= "s/" + currentUser.target.id + ".jpg" %>"/>
 	<br />
-	<a href="/logout"><button>logout</button></a>
+	<% if (currentUser.elimPing == true) { %>
+	<h2>your elimination claim is currently under investigation. if available, please email your video/photo evidence to nicholas.young2019@stgeorges.bc.ca to expedite the confirmation process. otherwise, please wait.</h2>
+	<form action="/elimCancel", method="POST">
+		<input type="checkbox" name="cancelConfirm" required /><label for="cancelConfirm">confirm cancel</label>
+		<br />
+		<button id="elimCancelBtn">cancel elimination</button>
+	</form>
+	<% } else { %>
+	<button id="elimBtn">target eliminated</button>
+	<% } %>
+	<div>
+		<button href="https://drive.google.com/file/d/1G1O2KtD6s6cjV_xMg7VP2Jc88atXQ9be/view">spy act</button>
+		<button id="safetyBtn" href="/">safeties</button>
+		<br />
+		<a href="/logout"><button>logout</button></a>
+	</div>
+
 </div>
 
 <div id="elimModal" class="modal">
-	<div class="modal-content">
+	<div class="modal-content" style="margin-top: 25%">
 		<span id="elimSpan" class="close">&times;</span>
-		<h2>please upload a video of your elimination, if available, and confirm your elimination.</h2>
-		<form id="elimForm">
-			<br /><input type="file" name="video"/> <br />
-			<button type="submit" id="eliminated-confirm">confirm</button>
+		<h2>please confirm your elimination.</h2>
+		<form action="/elimPing", method="POST">
+			<button>confirm</button>
 		</form>
 	</div>
 </div>
@@ -28,11 +49,11 @@
 <div id="safetyModal" class="modal">
 	<div class="modal-content">
 		<span id="safetySpan" class="close">&times;</span>
-		<h2>safety</h2>
+		<h2>current safeties</h2>
 		<h3>
-			this week's safety is
+			handcuffs: must be worn in front of body to be active. wrists must be sufficiently bound and movement should be limited. can be purchased at <a style="color: white" href="https://www.amazon.ca/Smiffys-Metal-handcuffs-with-keys/dp/B000H3RFXK/ref=sr_1_6?hvadid=231029564155&hvdev=c&hvlocphy=9001557&hvnetw=g&hvpos=1t1&hvqmt=b&hvrand=15817756066454092532&hvtargid=kwd-10308226&keywords=handcuff&qid=1555947556&s=gateway&sr=8-6">Amazon</a> or a local dollar store.
 		</h3>
-		<img src="" />
+		<img style="height: 200px; margin: auto" src="https://partycity6.scene7.com/is/image/PartyCity/_pdp_sq_?$_1000x1000_$&$product=PartyCity/28859" />
 	</div>
 </div>
 

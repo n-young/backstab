@@ -66,12 +66,42 @@ app.get('/user', isGameBegun, isLoggedIn, isPaid, function(req, res) {
     res.render("user.ejs", {
         currentUser: req.user
     });
+	User.update({id:req.user.id}, {$set: { alert:"" }}, {upsert: false}, function(err){
+		if (err) {
+			console.log("failed to write userdata")
+		}
+	});
 })
 
 app.get('/nickyoungpage', function(req, res) {
     res.render("user.ejs", {
         currentUser: req.user
     });
+	User.update({id:req.user.id}, {$set: { alert:"" }}, {upsert: false}, function(err){
+		if (err) {
+			console.log("failed to write userdata")
+		}
+	});
+})
+
+//ELIMPINGS
+
+app.post('/elimPing', function(req, res) {
+	User.update({id:req.user.id}, {$set: { elimPing:true }}, {upsert: false}, function(err){
+		if (err) {
+			console.log("failed to write userdata")
+		}
+	});
+	res.redirect("/");
+})
+
+app.post('/elimCancel', function(req, res) {
+	User.update({id:req.user.id}, {$set: { elimPing:false }}, {upsert: false}, function(err){
+		if (err) {
+			console.log("failed to write userdata")
+		}
+	});
+	res.redirect("/");
 })
 
 //REGISTRATION
@@ -87,9 +117,10 @@ app.post('/register', function(req, res) {
 				name: "none",
 				id: 0
 			},
-            due: null,
+            due: "May 13",
             status: "alive",
-			elimPing: false
+			elimPing: false,
+			alert: ""
         }), req.body.password,
         function(err, user) {
             if (err) {

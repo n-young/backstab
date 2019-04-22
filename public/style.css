@@ -10,7 +10,7 @@
 }
 
 body {
-    padding: 10%;
+    padding: 5%;
     background: black;
     color: white;
     text-align: center;
@@ -19,8 +19,16 @@ body {
 
 .content {
 	max-width: 30vw;
-	min-width: 300px;
+	min-width: 280px;
 	margin:auto;
+}
+
+.alert {
+	position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #b70000;
+    width: 100%;
 }
 
 h1 {
@@ -67,11 +75,6 @@ button:hover {
 	width: 200px;
 }
 
-#target-name {
-    color: #b70000;
-    text-decoration: underline;
-}
-
 /*MODAL SHIT*/
 .modal {
     display: none;
@@ -85,7 +88,7 @@ button:hover {
 
 .modal-content {
     background-color: #b70000;
-    margin: 20% auto;
+    margin: 5% auto;
     padding: 20px;
     width: 100vw;
 	max-width: 500px;

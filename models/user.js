@@ -9,9 +9,10 @@ var UserSchema = new mongoose.Schema({
 	phone: String,
 	paid: Boolean,
 	target: Object,
-	due: Date,
+	due: String,
 	status: String,
-	elimPing: Boolean
+	elimPing: Boolean,
+	alert: String
 });
 
 UserSchema.plugin(passportLocalMongoose);
