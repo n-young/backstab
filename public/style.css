@@ -31,7 +31,7 @@ h3 {
 	font-size: 20px;
 }
 
-input[type=text], input[type=password], input[type=email] {
+input[type=text], input[type=password], input[type=email], input[type=tel] {
     padding: 8px;
 	width: 50vw;
 	max-width: 150px;

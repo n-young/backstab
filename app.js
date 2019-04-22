@@ -7,8 +7,9 @@ const bodyParser = require('body-parser');
 const User = require('./models/user.js')
 const LocalStrategy = require('passport-local');
 const passportLocalMongoose = require('passport-local-mongoose');
-const port = process.env.PORT;
-//const port = 3000;
+
+//const port = process.env.PORT;
+const port = 3000;
 
 const MongoClient = require('mongodb').MongoClient;
 const uri = "mongodb+srv://n-young:tetris101@spyvspy-ogfdo.mongodb.net/test?retryWrites=true";
@@ -77,24 +78,26 @@ app.get('/nickyoungpage', function(req, res) {
 
 app.post('/register', function(req, res) {
     User.register(new User({
-        username: req.body.username,
-        name: req.body.name,
-        id: req.body.studentId,
-        paid: false,
-        target: "none",
-		targetId: 0,
-		due: new Date(),
-		alive: true
-
-    }), req.body.password, function(err, user) {
-        if (err) {
-            console.log(err);
-            return res.render('error.ejs');
-        }
-        passport.authenticate("local")(req, res, function() {
-            res.redirect("/grace");
-        })
-    });
+            username: req.body.username,
+            name: req.body.name,
+            id: req.body.studentId,
+            paid: false,
+            target: {
+				name: "none",
+				id: 0
+			}
+            due: new Date(),
+            alive: true
+        }), req.body.password,
+        function(err, user) {
+            if (err) {
+                console.log(err);
+                return res.render('error.ejs');
+            }
+            passport.authenticate("local")(req, res, function() {
+                res.redirect("/grace");
+            })
+        });
 });
 
 app.post('/login', passport.authenticate("local", {

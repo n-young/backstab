@@ -19,21 +19,21 @@
 		<h2>
 			please enter your details
 		</h2>
-		<form action="/register", method="POST">
+		<form enctype="multipart/form-data", action="/register", method="POST">
 			<label for="username">sgs email: </label>
 			<input type="email" name="username"  required/> <br/><br/>
 
 			<label for="name">full name: </label>
 			<input type="text" name="name"  required/> <br/><br/>
 
-			<label for="studentId">student #: </label>
-			<input type="text" name="studentId"  required/> <br/><br/>
-
 			<label for="password">password: </label>
 			<input type="password" name="password" required/> <br/><br/>
 
-			<label for="userPicture">photo: </label>
-			<input type="file" name="userPicture"/> <br/><br/>
+			<label for="studentId">student #: </label>
+			<input type="text" name="studentId"  required/> <br/><br/>
+
+			<label for="phone">cell phone #: </label>
+			<input type="tel" name="phone"  required/> <br/><br/>
 			<button>enter</button>
 		</form>
 	</div>
