@@ -81,13 +81,15 @@ app.post('/register', function(req, res) {
             username: req.body.username,
             name: req.body.name,
             id: req.body.studentId,
+			phone: req.body.phone,
             paid: false,
             target: {
 				name: "none",
 				id: 0
-			}
-            due: new Date(),
-            alive: true
+			},
+            due: null,
+            status: "unpaid",
+			elimPing: false
         }), req.body.password,
         function(err, user) {
             if (err) {

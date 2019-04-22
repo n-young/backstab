@@ -1,6 +1,6 @@
 <% include partials/header %>
 <title>spy vs spy</title>
-<img src="logoBW.png" width="200px" />
+<img src="s/logoBW.png" width="200px" />
 <h1>spy vs spy</h1>
 <form action="/login", method="POST">
 	<label for="username">user: </label>
@@ -19,7 +19,7 @@
 		<h2>
 			please enter your details
 		</h2>
-		<form enctype="multipart/form-data", action="/register", method="POST">
+		<form action="/register", method="POST">
 			<label for="username">sgs email: </label>
 			<input type="email" name="username"  required/> <br/><br/>
 
@@ -38,7 +38,6 @@
 		</form>
 	</div>
 </div>
-
 
 <script>
 	var regModal = document.getElementById('regModal');
