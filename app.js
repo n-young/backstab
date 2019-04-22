@@ -82,7 +82,7 @@ app.get('/nickyoungpage', function(req, res) {
 			console.log("failed to write userdata")
 		}
 	});
-})
+});
 
 //ELIMPINGS
 
@@ -93,7 +93,7 @@ app.post('/elimPing', function(req, res) {
 		}
 	});
 	res.redirect("/");
-})
+});
 
 app.post('/elimCancel', function(req, res) {
 	User.update({id:req.user.id}, {$set: { elimPing:false }}, {upsert: false}, function(err){
@@ -101,6 +101,23 @@ app.post('/elimCancel', function(req, res) {
 			console.log("failed to write userdata")
 		}
 	});
+	res.redirect("/");
+});
+
+app.post('/elimConfirm', function(req, res) {
+	if (req.body.elimValue == "confirm") {
+		User.update({id:req.user.id}, {$set: { status:"eliminated" }}, {upsert: false}, function(err){
+			if (err) {
+				console.log("failed to write userdata")
+			}
+		});
+	} else {
+		User.update({id:req.user.id}, {$set: { status:"alive", adminAlert:true }}, {upsert: false}, function(err){
+			if (err) {
+				console.log("failed to write userdata")
+			}
+		});
+	}
 	res.redirect("/");
 })
 
@@ -120,7 +137,8 @@ app.post('/register', function(req, res) {
             due: "May 13",
             status: "alive",
 			elimPing: false,
-			alert: ""
+			alert: "",
+			adminAlert: false
         }), req.body.password,
         function(err, user) {
             if (err) {

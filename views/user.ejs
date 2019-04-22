@@ -3,30 +3,71 @@
 
 <% if (currentUser.alert != "") { %>
 
-<div class="alert">
-	<h2><%= currentUser.alert %></h2>
+<div style="padding-bottom: 20px" class="alert">
+	<h2>
+		<%= currentUser.alert %>
+	</h2>
+</div>
+
+<% } currentUser.alert = ""; %>
+
+<% if (currentUser.status == "elimPending") { %>
+
+<div style="padding-bottom: 20px" class="alert">
+	<h2>your assailant has claimed to have eliminated you. please confirm or deny this claim. if you have eliminated your target, please send that confirmation first.</h2>
+	<form action="/elimConfirm" , method="POST">
+		<input type="checkbox" name="elimConfirmConfirm" required /><label for="elimConfirmConfirm">confirm choice</label>
+		<br />
+		<button type="submit" name="elimValue" value="confirm">i was eliminated</button>
+		<button type="submit" name="elimValue" value="deny">i was NOT eliminated</button>
+	</form>
 </div>
 
 <% } currentUser.alert = ""; %>
 
 <h1>spy portal</h1>
 <div class="content">
-	<h2>spy: <%= currentUser.name %></h2>
-	<h2 style="text-decoration: underline">target: <%= currentUser.target.name %></h2>
-	<h2>due: <%= currentUser.due %></h2>
+
+	<% if (currentUser.status == "alive" || currentUser.status == "elimPending") { %>
+
+	<h2>spy:
+		<%= currentUser.name %>
+	</h2>
+	<h2 style="text-decoration: underline">target:
+		<%= currentUser.target.name %>
+	</h2>
+	<h2>due:
+		<%= currentUser.due %>
+	</h2>
 	<h2>image: </h2>
-	<img style="height:200px" src="<%= "s/" + currentUser.target.id + ".jpg" %>"/>
+	<img style="height:200px" src="<%= " s/" + currentUser.target.id + ".jpg" %>"/>
 	<br />
+
 	<% if (currentUser.elimPing == true) { %>
+
 	<h2>your elimination claim is currently under investigation. if available, please email your video/photo evidence to nicholas.young2019@stgeorges.bc.ca to expedite the confirmation process. otherwise, please wait.</h2>
-	<form action="/elimCancel", method="POST">
+	<form action="/elimCancel" , method="POST">
 		<input type="checkbox" name="cancelConfirm" required /><label for="cancelConfirm">confirm cancel</label>
 		<br />
 		<button id="elimCancelBtn">cancel elimination</button>
 	</form>
+
 	<% } else { %>
 	<button id="elimBtn">target eliminated</button>
 	<% } %>
+
+	<% } else if (currentUser.status == "eliminated") { %>
+
+	<h2>you have been eliminated.</h2>
+	<h3>if there has been a mistake, or if you would like to be revived for a small fee, please contact <i>Headquarters</i> immediately.</h3>
+
+	<% } else { %>
+
+	<h2>there has been an error.</h2>
+	<h3>please contact <i>Headquarters</i> immediately with the error code "STATUSERROR"</h3>
+
+	<% } %>
+
 	<div>
 		<button href="https://drive.google.com/file/d/1G1O2KtD6s6cjV_xMg7VP2Jc88atXQ9be/view">spy act</button>
 		<button id="safetyBtn" href="/">safeties</button>
@@ -40,7 +81,7 @@
 	<div class="modal-content" style="margin-top: 25%">
 		<span id="elimSpan" class="close">&times;</span>
 		<h2>please confirm your elimination.</h2>
-		<form action="/elimPing", method="POST">
+		<form action="/elimPing" , method="POST">
 			<button>confirm</button>
 		</form>
 	</div>
@@ -51,7 +92,8 @@
 		<span id="safetySpan" class="close">&times;</span>
 		<h2>current safeties</h2>
 		<h3>
-			handcuffs: must be worn in front of body to be active. wrists must be sufficiently bound and movement should be limited. can be purchased at <a style="color: white" href="https://www.amazon.ca/Smiffys-Metal-handcuffs-with-keys/dp/B000H3RFXK/ref=sr_1_6?hvadid=231029564155&hvdev=c&hvlocphy=9001557&hvnetw=g&hvpos=1t1&hvqmt=b&hvrand=15817756066454092532&hvtargid=kwd-10308226&keywords=handcuff&qid=1555947556&s=gateway&sr=8-6">Amazon</a> or a local dollar store.
+			handcuffs: must be worn in front of body to be active. wrists must be sufficiently bound and movement should be limited. can be purchased at <a style="color: white" href="https://www.amazon.ca/Smiffys-Metal-handcuffs-with-keys/dp/B000H3RFXK/ref=sr_1_6?hvadid=231029564155&hvdev=c&hvlocphy=9001557&hvnetw=g&hvpos=1t1&hvqmt=b&hvrand=15817756066454092532&hvtargid=kwd-10308226&keywords=handcuff&qid=1555947556&s=gateway&sr=8-6">Amazon</a>
+			or a local dollar store.
 		</h3>
 		<img style="height: 200px; margin: auto" src="https://partycity6.scene7.com/is/image/PartyCity/_pdp_sq_?$_1000x1000_$&$product=PartyCity/28859" />
 	</div>

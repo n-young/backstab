@@ -12,7 +12,8 @@ var UserSchema = new mongoose.Schema({
 	due: String,
 	status: String,
 	elimPing: Boolean,
-	alert: String
+	alert: String,
+	adminAlert: Boolean
 });
 
 UserSchema.plugin(passportLocalMongoose);
