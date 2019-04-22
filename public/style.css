@@ -18,13 +18,13 @@ body {
 }
 
 .content {
-	max-width: 30vw;
-	min-width: 280px;
-	margin:auto;
+    max-width: 30vw;
+    min-width: 280px;
+    margin: auto;
 }
 
 .alert {
-	position: fixed;
+    position: fixed;
     top: 0;
     left: 0;
     background-color: #b70000;
@@ -37,25 +37,25 @@ h1 {
 }
 
 h3 {
-	font-size: 20px;
+    font-size: 20px;
 }
 
 input[type=text], input[type=password], input[type=email], input[type=tel] {
     padding: 8px;
-	width: 50vw;
-	max-width: 150px;
+    width: 50vw;
+    max-width: 150px;
     background: #fff;
 }
 
 input[type=file] {
-	background: #fff;
-	color: black;
+    background: #fff;
+    color: black;
 }
 
-a > button, button {
+a>button, button {
     margin-top: 15px;
     padding: 15px 40px;
-	width: 170px;
+    width: 170px;
     border-width: 0px;
     background: #fff;
     font-family: Cutive Mono;
@@ -72,7 +72,7 @@ button:hover {
 }
 
 #elimBtn {
-	width: 200px;
+    width: 200px;
 }
 
 /*MODAL SHIT*/
@@ -91,7 +91,7 @@ button:hover {
     margin: 5% auto;
     padding: 20px;
     width: 100vw;
-	max-width: 500px;
+    max-width: 500px;
 }
 
 .close {

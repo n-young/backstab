@@ -7,24 +7,4 @@
 	</h3>
 	<a href="/"><button>home</button></a>
 </div>
-
-
-
-<script>
-	var elimModal = document.getElementById('elimModal');
-	var elimBtn = document.getElementById("elimBtn");
-	var elimSpan = document.getElementById("elimSpan");
-	elimBtn.onclick = function() {
-		elimModal.style.display = "block";
-	}
-	elimSpan.onclick = function() {
-		elimModal.style.display = "none";
-		console.log('ye')
-	}
-	window.onclick = function(event) {
-		if (event.target == elimModal) {
-			elimModal.style.display = "none";
-		}
-	}
-</script>
 <% include partials/footer %>

@@ -1,3 +1,7 @@
+//=========================================
+//DEPENDENCIES
+//=========================================
+
 const express = require('express');
 const ejs = require('ejs');
 const app = express();
@@ -7,10 +11,6 @@ const bodyParser = require('body-parser');
 const User = require('./models/user.js')
 const LocalStrategy = require('passport-local');
 const passportLocalMongoose = require('passport-local-mongoose');
-
-const port = process.env.PORT;
-//const port = 3000;
-
 const MongoClient = require('mongodb').MongoClient;
 const uri = "mongodb+srv://n-young:tetris101@spyvspy-ogfdo.mongodb.net/test?retryWrites=true";
 const client = new MongoClient(uri, {
@@ -39,6 +39,8 @@ passport.use(new LocalStrategy(User.authenticate()))
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+const port = process.env.PORT;
+
 //=========================================
 //ROUTES
 //=========================================
@@ -66,79 +68,132 @@ app.get('/user', isGameBegun, isLoggedIn, isPaid, function(req, res) {
     res.render("user.ejs", {
         currentUser: req.user
     });
-	User.update({id:req.user.id}, {$set: { alert:"" }}, {upsert: false}, function(err){
-		if (err) {
-			console.log("failed to write userdata")
-		}
-	});
+    User.update({
+        id: req.user.id
+    }, {
+        $set: {
+            alert: ""
+        }
+    }, {
+        upsert: false
+    }, function(err) {
+        if (err) {
+            console.log("failed to write userdata")
+        }
+    });
 })
 
 app.get('/nickyoungpage', function(req, res) {
     res.render("user.ejs", {
         currentUser: req.user
     });
-	User.update({id:req.user.id}, {$set: { alert:"" }}, {upsert: false}, function(err){
-		if (err) {
-			console.log("failed to write userdata")
-		}
-	});
+    User.update({
+        id: req.user.id
+    }, {
+        $set: {
+            alert: ""
+        }
+    }, {
+        upsert: false
+    }, function(err) {
+        if (err) {
+            console.log("failed to write userdata")
+        }
+    });
 });
 
-//ELIMPINGS
+//=========================================
+//PUSH
+//=========================================
 
 app.post('/elimPing', function(req, res) {
-	User.update({id:req.user.id}, {$set: { elimPing:true }}, {upsert: false}, function(err){
-		if (err) {
-			console.log("failed to write userdata")
-		}
-	});
-	res.redirect("/");
+    User.update({
+        id: req.user.id
+    }, {
+        $set: {
+            elimPing: true
+        }
+    }, {
+        upsert: false
+    }, function(err) {
+        if (err) {
+            console.log("failed to write userdata")
+        }
+    });
+    res.redirect("/");
 });
 
 app.post('/elimCancel', function(req, res) {
-	User.update({id:req.user.id}, {$set: { elimPing:false }}, {upsert: false}, function(err){
-		if (err) {
-			console.log("failed to write userdata")
-		}
-	});
-	res.redirect("/");
+    User.update({
+        id: req.user.id
+    }, {
+        $set: {
+            elimPing: false
+        }
+    }, {
+        upsert: false
+    }, function(err) {
+        if (err) {
+            console.log("failed to write userdata")
+        }
+    });
+    res.redirect("/");
 });
 
 app.post('/elimConfirm', function(req, res) {
-	if (req.body.elimValue == "confirm") {
-		User.update({id:req.user.id}, {$set: { status:"eliminated" }}, {upsert: false}, function(err){
-			if (err) {
-				console.log("failed to write userdata")
-			}
-		});
-	} else {
-		User.update({id:req.user.id}, {$set: { status:"alive", adminAlert:true }}, {upsert: false}, function(err){
-			if (err) {
-				console.log("failed to write userdata")
-			}
-		});
-	}
-	res.redirect("/");
+    if (req.body.elimValue == "confirm") {
+        User.update({
+            id: req.user.id
+        }, {
+            $set: {
+                status: "eliminated"
+            }
+        }, {
+            upsert: false
+        }, function(err) {
+            if (err) {
+                console.log("failed to write userdata")
+            }
+        });
+    } else {
+        User.update({
+            id: req.user.id
+        }, {
+            $set: {
+                status: "alive",
+                adminAlert: true
+            }
+        }, {
+            upsert: false
+        }, function(err) {
+            if (err) {
+                console.log("failed to write userdata")
+            }
+        });
+    }
+    res.redirect("/");
 })
 
-//REGISTRATION
+//=========================================
+//LOGIN & REGISTRATION HANDLING
+//=========================================
 
 app.post('/register', function(req, res) {
     User.register(new User({
             username: req.body.username,
             name: req.body.name,
             id: req.body.studentId,
-			phone: req.body.phone,
+            phone: req.body.phone,
             paid: false,
             target: {
-				name: "none",
-				id: 0
-			},
+                name: "none",
+                id: 0
+            },
             due: "May 13",
             status: "alive",
-			elimPing: false,
-			alert: "",
-			adminAlert: false
+            elimPing: false,
+            alert: "",
+            adminAlert: false
         }), req.body.password,
         function(err, user) {
             if (err) {
@@ -160,6 +215,10 @@ app.get("/logout", function(req, res) {
     req.logout();
     res.redirect("/")
 });
+
+//=========================================
+//CONDITIONALS
+//=========================================
 
 function isGameBegun(req, res, next) {
     gameBegun = false;
@@ -186,6 +245,10 @@ function isPaid(req, res, next) {
 app.get('*', function(req, res) {
     res.redirect('/');
 })
+
+//=========================================
+//START
+//=========================================
 
 app.listen(port, function() {
     console.log("Server listening on port: " + port);
