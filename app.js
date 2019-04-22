@@ -88,7 +88,7 @@ app.post('/register', function(req, res) {
 				id: 0
 			},
             due: null,
-            status: "unpaid",
+            status: "alive",
 			elimPing: false
         }), req.body.password,
         function(err, user) {
