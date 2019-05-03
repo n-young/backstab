@@ -39,8 +39,8 @@ passport.use(new LocalStrategy(User.authenticate()))
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-const port = process.env.PORT;
-
+//const port = process.env.PORT;
+const port = 3000;
 //=========================================
 //ROUTES
 //=========================================
@@ -64,9 +64,10 @@ app.get('/grace', isLoggedIn, isPaid, function(req, res) {
     });
 })
 
-app.get('/user', isGameBegun, isLoggedIn, isPaid, function(req, res) {
+app.get('/user', isLoggedIn, isPaid, function(req, res) {
     res.render("user.ejs", {
-        currentUser: req.user
+        currentUser: req.user,
+        gameOn: false
     });
     User.update({
         id: req.user.id
@@ -85,7 +86,8 @@ app.get('/user', isGameBegun, isLoggedIn, isPaid, function(req, res) {
 
 app.get('/nickyoungpage', function(req, res) {
     res.render("user.ejs", {
-        currentUser: req.user
+        currentUser: req.user,
+        gameOn: true
     });
     User.update({
         id: req.user.id
@@ -201,13 +203,13 @@ app.post('/register', function(req, res) {
                 return res.render('error.ejs');
             }
             passport.authenticate("local")(req, res, function() {
-                res.redirect("/grace");
+                res.redirect("/user");
             })
         });
 });
 
 app.post('/login', passport.authenticate("local", {
-    successRedirect: "/grace",
+    successRedirect: "/user",
     failureRedirect: "/"
 }), function(req, res) {})
 
@@ -219,14 +221,6 @@ app.get("/logout", function(req, res) {
 //=========================================
 //CONDITIONALS
 //=========================================
-
-function isGameBegun(req, res, next) {
-    gameBegun = false;
-    if (gameBegun) {
-        res.redirect("/user");
-    }
-    res.redirect("/grace");
-}
 
 function isLoggedIn(req, res, next) {
     if (req.isAuthenticated()) {

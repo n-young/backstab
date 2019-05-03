@@ -28,7 +28,10 @@
 <h1>spy portal</h1>
 <div class="content">
 
-	<% if (currentUser.status == "alive" || currentUser.status == "elimPending") { %>
+	<% if (gameOn == false) { %>
+	<h2>the first safety is released. view below.</h2>
+	<h2>target information will be released on sunday. please wait.</h2>
+	<% } else if (currentUser.status == "alive" || currentUser.status == "elimPending") { %>
 
 	<h2>spy:
 		<%= currentUser.name %>
@@ -69,7 +72,7 @@
 	<% } %>
 
 	<div>
-		<button href="https://drive.google.com/file/d/1G1O2KtD6s6cjV_xMg7VP2Jc88atXQ9be/view">spy act</button>
+		<a  href="https://drive.google.com/file/d/1G1O2KtD6s6cjV_xMg7VP2Jc88atXQ9be/view"><button>spy act</button></a>
 		<button id="safetyBtn" href="/">safeties</button>
 		<br />
 		<a href="/logout"><button>logout</button></a>
@@ -91,6 +94,9 @@
 	<div class="modal-content">
 		<span id="safetySpan" class="close">&times;</span>
 		<h2>current safeties</h2>
+		<h2>
+			May 3 - 12
+		</h2>
 		<h3>
 			handcuffs: must be worn in front of body to be active. wrists must be sufficiently bound and movement should be limited. can be purchased at <a style="color: white" href="https://www.amazon.ca/Smiffys-Metal-handcuffs-with-keys/dp/B000H3RFXK/ref=sr_1_6?hvadid=231029564155&hvdev=c&hvlocphy=9001557&hvnetw=g&hvpos=1t1&hvqmt=b&hvrand=15817756066454092532&hvtargid=kwd-10308226&keywords=handcuff&qid=1555947556&s=gateway&sr=8-6">Amazon</a>
 			or a local dollar store.
@@ -100,6 +106,21 @@
 </div>
 
 <script>
+	var safetyModal = document.getElementById('safetyModal');
+	var safetyBtn = document.getElementById("safetyBtn");
+	var safetySpan = document.getElementById("safetySpan");
+	safetyBtn.onclick = function() {
+		safetyModal.style.display = "block";
+	}
+	safetySpan.onclick = function() {
+		safetyModal.style.display = "none";
+	}
+	window.onclick = function(event) {
+		if (event.target == safetyModal) {
+			safetyModal.style.display = "none";
+		}
+	}
+
 	var elimModal = document.getElementById('elimModal');
 	var elimBtn = document.getElementById("elimBtn");
 	var elimSpan = document.getElementById("elimSpan");
@@ -113,21 +134,6 @@
 	window.onclick = function(event) {
 		if (event.target == elimModal) {
 			elimModal.style.display = "none";
-		}
-	}
-
-	var safetyModal = document.getElementById('safetyModal');
-	var safetyBtn = document.getElementById("safetyBtn");
-	var safetySpan = document.getElementById("safetySpan");
-	safetyBtn.onclick = function() {
-		safetyModal.style.display = "block";
-	}
-	safetySpan.onclick = function() {
-		safetyModal.style.display = "none";
-	}
-	window.onclick = function(event) {
-		if (event.target == safetyModal) {
-			safetyModal.style.display = "none";
 		}
 	}
 </script>
