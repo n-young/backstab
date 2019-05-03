@@ -49,7 +49,7 @@ app.get('/', function(req, res) {
     if (req.isAuthenticated()) {
         return res.redirect("/user");
     }
-    res.render("index.ejs");
+    res.render("index.ejs", {regOverride:false});
 })
 
 app.get('/payment', isLoggedIn, function(req, res) {
@@ -82,6 +82,13 @@ app.get('/user', isLoggedIn, isPaid, function(req, res) {
             console.log("failed to write userdata")
         }
     });
+})
+
+app.get('/registeryeet', function(req, res) {
+    if (req.isAuthenticated()) {
+        return res.redirect("/user");
+    }
+    res.render("index.ejs", {regOverride:true});
 })
 
 app.get('/nickyoungpage', function(req, res) {
