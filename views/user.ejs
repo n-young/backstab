@@ -43,7 +43,7 @@
 		<%= currentUser.due %>
 	</h2>
 	<h2>image: </h2>
-	<img style="height:200px" src="<%= " s/" + currentUser.target.id + ".png" %>"/>
+	<img style="height:30vh" src="<%= " s/" + currentUser.target.id + ".png" %>"/>
 	<br />
 
 	<% if (currentUser.elimPing == true) { %>
@@ -82,7 +82,7 @@
 
 <div id="elimModal" class="modal">
 	<div class="modal-content" style="margin-top: 25%">
-		<span id="elimSpan" class="close">&times;</span>
+		<span id="elimSpan" class="close" style="font-size: 30px">&times;</span>
 		<h2>please confirm your elimination.</h2>
 		<form action="/elimPing" , method="POST">
 			<button>confirm</button>
