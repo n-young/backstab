@@ -53,19 +53,7 @@ app.get('/', function(req, res) {
     res.render("index.ejs", {regOverride:false});
 })
 
-app.get('/payment', isLoggedIn, function(req, res) {
-    res.render("payment.ejs", {
-        currentUser: req.user
-    });
-})
-
-app.get('/grace', isLoggedIn, isPaid, function(req, res) {
-    res.render('grace.ejs', {
-        currentUser: req.user
-    });
-})
-
-app.get('/user', isLoggedIn, isPaid, function(req, res) {
+app.get('/user', isLoggedIn, function(req, res) {
     res.render("user.ejs", {
         currentUser: req.user,
         gameOn: false
@@ -226,6 +214,10 @@ app.get("/logout", function(req, res) {
     res.redirect("/")
 });
 
+app.get('*', function(req, res) {
+    res.redirect('/');
+})
+
 //=========================================
 //CONDITIONALS
 //=========================================
@@ -236,17 +228,6 @@ function isLoggedIn(req, res, next) {
     }
     res.redirect("/");
 }
-
-function isPaid(req, res, next) {
-    if (req.user.paid === true) {
-        return next();
-    }
-    res.redirect("/payment");
-}
-
-app.get('*', function(req, res) {
-    res.redirect('/');
-})
 
 //=========================================
 //START

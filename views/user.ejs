@@ -3,17 +3,27 @@
 
 <% if (currentUser.alert != "") { %>
 
-<div style="padding-bottom: 20px" class="alert">
+<div class="alert">
 	<h2>
 		<%= currentUser.alert %>
 	</h2>
 </div>
 
-<% } currentUser.alert = ""; %>
+<% } %>
+
+<% if (currentUser.paid == false) { %>
+
+<div class="alert">
+	<h2>
+		<i>Headquarters</i> has still not received your payment. please deliver $10 to Nick ASAP.
+	</h2>
+</div>
+
+<% } %>
 
 <% if (currentUser.status == "elimPending") { %>
 
-<div style="padding-bottom: 20px" class="alert">
+<div class="alert">
 	<h2>your assailant has claimed to have eliminated you. please confirm or deny this claim. if you have eliminated your target, please send that confirmation first.</h2>
 	<form action="/elimConfirm" , method="POST">
 		<input type="checkbox" name="elimConfirmConfirm" required /><label for="elimConfirmConfirm">confirm choice</label>
