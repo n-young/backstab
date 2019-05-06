@@ -1,0 +1,12 @@
+<% include partials/header %>
+<title>forgot password</title>
+<h1>forgot password</h1>
+<div class="content">
+	<h3>enter your email. reset instructions will be sent to you.</h3>
+	<form action="/forgot" method="POST">
+		<input type="email" name="email" /> <br />
+		<button type="submit">submit</button>
+	</form>
+</div>
+
+<% include partials/footer %>

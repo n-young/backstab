@@ -1,0 +1,15 @@
+<% include partials/header %>
+<title>reset password</title>
+<h1>reset password</h1>
+<div class="content">
+	<h3>enter new password.</h3>
+	<form action="/reset/<%= token %>" method="POST">
+		<label for="password">new password:</label>
+		<input type="password" name="password" /> <br />
+			<label for="confirm">confirm:</label>
+		<input type="password" name="confirm" /> <br />
+		<button type="submit">submit</button>
+	</form>
+</div>
+
+<% include partials/footer %>

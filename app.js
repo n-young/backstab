@@ -3,11 +3,15 @@
 //=========================================
 
 const express = require('express');
+const flash = require('express-flash');
 const ejs = require('ejs');
 const app = express();
 const mongoose = require('mongoose');
 const passport = require('passport');
+const nodemailer = require('nodemailer');
 const bodyParser = require('body-parser');
+const async = require('async');
+const crypto = require('crypto');
 const User = require('./models/user.js')
 const LocalStrategy = require('passport-local');
 const passportLocalMongoose = require('passport-local-mongoose');
@@ -39,8 +43,8 @@ passport.use(new LocalStrategy(User.authenticate()))
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-const port = process.env.PORT;
-//const port = 3000;
+//const port = process.env.PORT;
+const port = 3000;
 
 //=========================================
 //ROUTES
@@ -50,7 +54,9 @@ app.get('/', function(req, res) {
     if (req.isAuthenticated()) {
         return res.redirect("/user");
     }
-    res.render("index.ejs", {regOverride:false});
+    res.render("index.ejs", {
+        regOverride: false
+    });
 })
 
 app.get('/user', isLoggedIn, function(req, res) {
@@ -77,7 +83,9 @@ app.get('/registeryeet', function(req, res) {
     if (req.isAuthenticated()) {
         return res.redirect("/user");
     }
-    res.render("index.ejs", {regOverride:true});
+    res.render("index.ejs", {
+        regOverride: true
+    });
 })
 
 app.get('/nickyoungpage', function(req, res) {
@@ -214,9 +222,148 @@ app.get("/logout", function(req, res) {
     res.redirect("/")
 });
 
+//=========================================
+//OW RESET HANDLING
+//=========================================
+
+app.get('/forgot', function(req, res) {
+    res.render('forgot.ejs', {
+        user: req.user
+    });
+});
+
+app.post('/forgot', function(req, res, next) {
+    async.waterfall([
+        function(done) {
+            crypto.randomBytes(20, function(err, buf) {
+                var token = buf.toString('hex');
+                done(err, token);
+            });
+        },
+        function(token, done) {
+            User.findOne({
+                username: req.body.email
+            }, function(err, user) {
+                if (!user) {
+                    console.log("no account")
+                    //req.flash('error', 'No account with that email address exists.');
+                    return res.redirect('/forgot');
+                }
+
+                user.resetPasswordToken = token;
+                user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
+
+                user.save(function(err) {
+                    done(err, token, user);
+                });
+            });
+        },
+        function(token, user, done) {
+            var smtpTransport = nodemailer.createTransport({
+                service: "Gmail",
+                auth: {
+                    user: 'youngnicholas420@gmail.com',
+                    pass: 'hahameme1',
+                }
+            });
+            var mailOptions = {
+                to: user.username,
+                from: process.env.FROM_EMAIL,
+                subject: 'Spy V Spy Password Change',
+                text: 'This email allows you to change your password.\n\n' +
+                    'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
+                    'http://' + req.headers.host + '/reset/' + token + '\n\n' +
+                    'If you did not request this, please ignore this email and your password will remain unchanged.\n'
+            };
+            smtpTransport.sendMail(mailOptions, function(err) {
+                //req.flash('info', 'An e-mail has been sent to ' + user.email + ' with a link to change the password.');
+                done(err, 'done');
+            });
+        }
+    ], function(err) {
+        if (err) return next(err);
+        res.redirect('/forgot');
+    });
+});
+
+app.get('/reset/:token', function(req, res) {
+    User.findOne({
+        resetPasswordToken: req.params.token,
+        resetPasswordExpires: {
+            $gt: Date.now()
+        }
+    }, function(err, user) {
+        if (!user) {
+            //req.flash('error', 'Password reset token is invalid or has expired.');
+            return res.redirect('/forgot');
+        }
+        res.render('reset', {
+            user: req.user,
+            token: req.params.token
+        });
+    });
+});
+
+
+app.post('/reset/:token', function(req, res) {
+    async.waterfall([
+            function(done) {
+                User.findOne({
+                    resetPasswordToken: req.params.token,
+                    resetPasswordExpires: {
+                        $gt: Date.now()
+                    }
+                }, function(err, user) {
+                    if (!user) {
+                        //req.flash('error', 'Password reset token is invalid or has expired.');
+                        return res.redirect('back');
+                    }
+                    if (req.body.password === req.body.confirm) {
+                        user.setPassword(req.body.password, function(err) {
+                            user.resetPasswordToken = undefined;
+                            user.resetPasswordExpires = undefined;
+                            user.save(function(err) {
+                                req.logIn(user, function(err) {
+                                    done(err, user);
+                                });
+                            });
+                        });
+                    } else {
+                        //req.flash("error", "Passwords do not match.");
+                        return res.redirect('back');
+                    }
+                });
+            },
+            function(user, done) {
+                var smtpTransport = nodemailer.createTransport({
+                    service: "Gmail",
+                    auth: {
+                        user: 'youngnicholas420@gmail.com',
+                        pass: 'hahameme1',
+                    }
+                });
+                var mailOptions = {
+                    to: user.username,
+                    from: process.env.FROM_EMAIL,
+                    subject: 'Spy V Spy - Your password has been changed',
+                    text: 'Hello,\n\n' +
+                        'This is a confirmation that the password for your account ' + user.username + ' has just been changed.\n'
+                };
+                smtpTransport.sendMail(mailOptions, function(err) {
+                    //req.flash('success', 'Success! Your password has been changed.');
+                    done(err);
+                });
+            }
+        ],
+        function(err) {
+            res.redirect('/');
+        });
+});
+
 app.get('*', function(req, res) {
     res.redirect('/');
 })
+
 
 //=========================================
 //CONDITIONALS
