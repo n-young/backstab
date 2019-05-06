@@ -43,8 +43,8 @@ passport.use(new LocalStrategy(User.authenticate()))
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-//const port = process.env.PORT;
-const port = 3000;
+const port = process.env.PORT;
+//const port = 3000;
 
 //=========================================
 //ROUTES
