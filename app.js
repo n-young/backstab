@@ -56,7 +56,7 @@ app.get('/', function(req, res) {
 app.get('/user', isLoggedIn, function(req, res) {
     res.render("user.ejs", {
         currentUser: req.user,
-        gameOn: false
+        gameOn: true
     });
     User.update({
         id: req.user.id
