@@ -195,7 +195,7 @@ app.post('/register', function(req, res) {
                 name: "none",
                 id: 0
             },
-            due: "May 13",
+            due: "none",
             status: "alive",
             elimPing: false,
             alert: "",
