@@ -223,7 +223,7 @@ app.get("/logout", function(req, res) {
 });
 
 //=========================================
-//OW RESET HANDLING
+//PW RESET HANDLING
 //=========================================
 
 app.get('/forgot', function(req, res) {
