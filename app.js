@@ -28,7 +28,7 @@ mongoose.connect(uri);
 
 app.use(express.static("public"));
 app.use(require("express-session")({
-    secret: "my goodness this code is very janky",
+    secret: "__KEY__",
     resave: false,
     saveUninitialized: false
 }));
@@ -74,7 +74,7 @@ app.get('/user', isLoggedIn, function(req, res) {
         upsert: false
     }, function(err) {
         if (err) {
-            console.log("failed to write userdata")
+            console.log("Failed to write user data.")
         }
     });
 })
@@ -103,7 +103,7 @@ app.get('/nickyoungpage', function(req, res) {
         upsert: false
     }, function(err) {
         if (err) {
-            console.log("failed to write userdata")
+            console.log("Failed to write user data.")
         }
     });
 });
@@ -123,7 +123,7 @@ app.post('/elimPing', function(req, res) {
         upsert: false
     }, function(err) {
         if (err) {
-            console.log("failed to write userdata")
+            console.log("Failed to write user data.")
         }
     });
     res.redirect("/");
@@ -140,7 +140,7 @@ app.post('/elimCancel', function(req, res) {
         upsert: false
     }, function(err) {
         if (err) {
-            console.log("failed to write userdata")
+            console.log("Failed to write user data.")
         }
     });
     res.redirect("/");
@@ -158,7 +158,7 @@ app.post('/elimConfirm', function(req, res) {
             upsert: false
         }, function(err) {
             if (err) {
-                console.log("failed to write userdata")
+                console.log("Failed to write user data.")
             }
         });
     } else {
@@ -173,7 +173,7 @@ app.post('/elimConfirm', function(req, res) {
             upsert: false
         }, function(err) {
             if (err) {
-                console.log("failed to write userdata")
+                console.log("Failed to write user data.")
             }
         });
     }
@@ -262,8 +262,8 @@ app.post('/forgot', function(req, res, next) {
             var smtpTransport = nodemailer.createTransport({
                 service: "Gmail",
                 auth: {
-                    user: 'youngnicholas420@gmail.com',
-                    pass: 'hahameme1',
+                    user: '__EMAIL__',
+                    pass: '__PASSWORD__',
                 }
             });
             var mailOptions = {
@@ -338,8 +338,8 @@ app.post('/reset/:token', function(req, res) {
                 var smtpTransport = nodemailer.createTransport({
                     service: "Gmail",
                     auth: {
-                        user: 'youngnicholas420@gmail.com',
-                        pass: 'hahameme1',
+                        user: '__EMAIL__',
+                        pass: '__PASSWORD__',
                     }
                 });
                 var mailOptions = {
