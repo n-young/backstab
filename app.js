@@ -16,7 +16,7 @@ const User = require('./models/user.js')
 const LocalStrategy = require('passport-local');
 const passportLocalMongoose = require('passport-local-mongoose');
 const MongoClient = require('mongodb').MongoClient;
-const uri = "mongodb+srv://n-young:tetris101@spyvspy-ogfdo.mongodb.net/test?retryWrites=true";
+const uri = __DATABASE_STRING__;
 const client = new MongoClient(uri, {
     useNewUrlParser: true
 });
