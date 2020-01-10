@@ -50,7 +50,7 @@ const port = process.env.PORT;
 //ROUTES
 //=========================================
 
-app.get('/', function(req, res) {
+app.get('/', function (req, res) {
     if (req.isAuthenticated()) {
         return res.redirect("/user");
     }
@@ -59,7 +59,7 @@ app.get('/', function(req, res) {
     });
 })
 
-app.get('/user', isLoggedIn, function(req, res) {
+app.get('/user', isLoggedIn, function (req, res) {
     res.render("user.ejs", {
         currentUser: req.user,
         gameOn: true
@@ -72,14 +72,14 @@ app.get('/user', isLoggedIn, function(req, res) {
         }
     }, {
         upsert: false
-    }, function(err) {
+    }, function (err) {
         if (err) {
             console.log("Failed to write user data.")
         }
     });
 })
 
-app.get('/registeryeet', function(req, res) {
+app.get('/registeryeet', function (req, res) {
     if (req.isAuthenticated()) {
         return res.redirect("/user");
     }
@@ -88,7 +88,7 @@ app.get('/registeryeet', function(req, res) {
     });
 })
 
-app.get('/nickyoungpage', function(req, res) {
+app.get('/nickyoungpage', function (req, res) {
     res.render("user.ejs", {
         currentUser: req.user,
         gameOn: true
@@ -101,7 +101,7 @@ app.get('/nickyoungpage', function(req, res) {
         }
     }, {
         upsert: false
-    }, function(err) {
+    }, function (err) {
         if (err) {
             console.log("Failed to write user data.")
         }
@@ -112,7 +112,7 @@ app.get('/nickyoungpage', function(req, res) {
 //PUSH
 //=========================================
 
-app.post('/elimPing', function(req, res) {
+app.post('/elimPing', function (req, res) {
     User.update({
         id: req.user.id
     }, {
@@ -121,7 +121,7 @@ app.post('/elimPing', function(req, res) {
         }
     }, {
         upsert: false
-    }, function(err) {
+    }, function (err) {
         if (err) {
             console.log("Failed to write user data.")
         }
@@ -129,7 +129,7 @@ app.post('/elimPing', function(req, res) {
     res.redirect("/");
 });
 
-app.post('/elimCancel', function(req, res) {
+app.post('/elimCancel', function (req, res) {
     User.update({
         id: req.user.id
     }, {
@@ -138,7 +138,7 @@ app.post('/elimCancel', function(req, res) {
         }
     }, {
         upsert: false
-    }, function(err) {
+    }, function (err) {
         if (err) {
             console.log("Failed to write user data.")
         }
@@ -146,7 +146,7 @@ app.post('/elimCancel', function(req, res) {
     res.redirect("/");
 });
 
-app.post('/elimConfirm', function(req, res) {
+app.post('/elimConfirm', function (req, res) {
     if (req.body.elimValue == "confirm") {
         User.update({
             id: req.user.id
@@ -156,7 +156,7 @@ app.post('/elimConfirm', function(req, res) {
             }
         }, {
             upsert: false
-        }, function(err) {
+        }, function (err) {
             if (err) {
                 console.log("Failed to write user data.")
             }
@@ -171,7 +171,7 @@ app.post('/elimConfirm', function(req, res) {
             }
         }, {
             upsert: false
-        }, function(err) {
+        }, function (err) {
             if (err) {
                 console.log("Failed to write user data.")
             }
@@ -184,29 +184,29 @@ app.post('/elimConfirm', function(req, res) {
 //LOGIN & REGISTRATION HANDLING
 //=========================================
 
-app.post('/register', function(req, res) {
+app.post('/register', function (req, res) {
     User.register(new User({
-            username: req.body.username,
-            name: req.body.name,
-            id: req.body.studentId,
-            phone: req.body.phone,
-            paid: false,
-            target: {
-                name: "none",
-                id: 0
-            },
-            due: "none",
-            status: "alive",
-            elimPing: false,
-            alert: "",
-            adminAlert: false
-        }), req.body.password,
-        function(err, user) {
+        username: req.body.username,
+        name: req.body.name,
+        id: req.body.studentId,
+        phone: req.body.phone,
+        paid: false,
+        target: {
+            name: "none",
+            id: 0
+        },
+        due: "none",
+        status: "alive",
+        elimPing: false,
+        alert: "",
+        adminAlert: false
+    }), req.body.password,
+        function (err, user) {
             if (err) {
                 console.log(err);
                 return res.render('error.ejs');
             }
-            passport.authenticate("local")(req, res, function() {
+            passport.authenticate("local")(req, res, function () {
                 res.redirect("/user");
             })
         });
@@ -215,9 +215,9 @@ app.post('/register', function(req, res) {
 app.post('/login', passport.authenticate("local", {
     successRedirect: "/user",
     failureRedirect: "/"
-}), function(req, res) {})
+}), function (req, res) { })
 
-app.get("/logout", function(req, res) {
+app.get("/logout", function (req, res) {
     req.logout();
     res.redirect("/")
 });
@@ -226,24 +226,24 @@ app.get("/logout", function(req, res) {
 //PW RESET HANDLING
 //=========================================
 
-app.get('/forgot', function(req, res) {
+app.get('/forgot', function (req, res) {
     res.render('forgot.ejs', {
         user: req.user
     });
 });
 
-app.post('/forgot', function(req, res, next) {
+app.post('/forgot', function (req, res, next) {
     async.waterfall([
-        function(done) {
-            crypto.randomBytes(20, function(err, buf) {
+        function (done) {
+            crypto.randomBytes(20, function (err, buf) {
                 var token = buf.toString('hex');
                 done(err, token);
             });
         },
-        function(token, done) {
+        function (token, done) {
             User.findOne({
                 username: req.body.email
-            }, function(err, user) {
+            }, function (err, user) {
                 if (!user) {
                     console.log("no account")
                     //req.flash('error', 'No account with that email address exists.');
@@ -253,12 +253,12 @@ app.post('/forgot', function(req, res, next) {
                 user.resetPasswordToken = token;
                 user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
 
-                user.save(function(err) {
+                user.save(function (err) {
                     done(err, token, user);
                 });
             });
         },
-        function(token, user, done) {
+        function (token, user, done) {
             var smtpTransport = nodemailer.createTransport({
                 service: "Gmail",
                 auth: {
@@ -275,24 +275,24 @@ app.post('/forgot', function(req, res, next) {
                     'http://' + req.headers.host + '/reset/' + token + '\n\n' +
                     'If you did not request this, please ignore this email and your password will remain unchanged.\n'
             };
-            smtpTransport.sendMail(mailOptions, function(err) {
+            smtpTransport.sendMail(mailOptions, function (err) {
                 //req.flash('info', 'An e-mail has been sent to ' + user.email + ' with a link to change the password.');
                 done(err, 'done');
             });
         }
-    ], function(err) {
+    ], function (err) {
         if (err) return next(err);
         res.redirect('/forgot');
     });
 });
 
-app.get('/reset/:token', function(req, res) {
+app.get('/reset/:token', function (req, res) {
     User.findOne({
         resetPasswordToken: req.params.token,
         resetPasswordExpires: {
             $gt: Date.now()
         }
-    }, function(err, user) {
+    }, function (err, user) {
         if (!user) {
             //req.flash('error', 'Password reset token is invalid or has expired.');
             return res.redirect('/forgot');
@@ -305,62 +305,62 @@ app.get('/reset/:token', function(req, res) {
 });
 
 
-app.post('/reset/:token', function(req, res) {
+app.post('/reset/:token', function (req, res) {
     async.waterfall([
-            function(done) {
-                User.findOne({
-                    resetPasswordToken: req.params.token,
-                    resetPasswordExpires: {
-                        $gt: Date.now()
-                    }
-                }, function(err, user) {
-                    if (!user) {
-                        //req.flash('error', 'Password reset token is invalid or has expired.');
-                        return res.redirect('back');
-                    }
-                    if (req.body.password === req.body.confirm) {
-                        user.setPassword(req.body.password, function(err) {
-                            user.resetPasswordToken = undefined;
-                            user.resetPasswordExpires = undefined;
-                            user.save(function(err) {
-                                req.logIn(user, function(err) {
-                                    done(err, user);
-                                });
+        function (done) {
+            User.findOne({
+                resetPasswordToken: req.params.token,
+                resetPasswordExpires: {
+                    $gt: Date.now()
+                }
+            }, function (err, user) {
+                if (!user) {
+                    //req.flash('error', 'Password reset token is invalid or has expired.');
+                    return res.redirect('back');
+                }
+                if (req.body.password === req.body.confirm) {
+                    user.setPassword(req.body.password, function (err) {
+                        user.resetPasswordToken = undefined;
+                        user.resetPasswordExpires = undefined;
+                        user.save(function (err) {
+                            req.logIn(user, function (err) {
+                                done(err, user);
                             });
                         });
-                    } else {
-                        //req.flash("error", "Passwords do not match.");
-                        return res.redirect('back');
-                    }
-                });
-            },
-            function(user, done) {
-                var smtpTransport = nodemailer.createTransport({
-                    service: "Gmail",
-                    auth: {
-                        user: '__EMAIL__',
-                        pass: '__PASSWORD__',
-                    }
-                });
-                var mailOptions = {
-                    to: user.username,
-                    from: process.env.FROM_EMAIL,
-                    subject: 'Spy V Spy - Your password has been changed',
-                    text: 'Hello,\n\n' +
-                        'This is a confirmation that the password for your account ' + user.username + ' has just been changed.\n'
-                };
-                smtpTransport.sendMail(mailOptions, function(err) {
-                    //req.flash('success', 'Success! Your password has been changed.');
-                    done(err);
-                });
-            }
-        ],
-        function(err) {
+                    });
+                } else {
+                    //req.flash("error", "Passwords do not match.");
+                    return res.redirect('back');
+                }
+            });
+        },
+        function (user, done) {
+            var smtpTransport = nodemailer.createTransport({
+                service: "Gmail",
+                auth: {
+                    user: '__EMAIL__',
+                    pass: '__PASSWORD__',
+                }
+            });
+            var mailOptions = {
+                to: user.username,
+                from: process.env.FROM_EMAIL,
+                subject: 'Spy V Spy - Your password has been changed',
+                text: 'Hello,\n\n' +
+                    'This is a confirmation that the password for your account ' + user.username + ' has just been changed.\n'
+            };
+            smtpTransport.sendMail(mailOptions, function (err) {
+                //req.flash('success', 'Success! Your password has been changed.');
+                done(err);
+            });
+        }
+    ],
+        function (err) {
             res.redirect('/');
         });
 });
 
-app.get('*', function(req, res) {
+app.get('*', function (req, res) {
     res.redirect('/');
 })
 
@@ -380,6 +380,6 @@ function isLoggedIn(req, res, next) {
 //START
 //=========================================
 
-app.listen(port, function() {
+app.listen(port, function () {
     console.log("Server listening on port: " + port);
 })
